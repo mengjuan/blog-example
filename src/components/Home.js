@@ -1,6 +1,7 @@
 import React , {Component} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import renderHTML from 'react-render-html'
 
 class Home extends Component {
     state = {
@@ -8,10 +9,10 @@ class Home extends Component {
     }
 
     componentDidMount(){
-        axios.get('https://jsonplaceholder.typicode.com/posts/')
+        axios.get('http://47.104.167.167/blog-service/api/articles')
              .then(res => {
                  this.setState({
-                     posts: res.data.slice(0,10)
+                     posts: res.data
                  })
              })
     }
@@ -19,11 +20,16 @@ class Home extends Component {
     render(){
         const posts = this.state.posts
         const postsList = posts.length ? (posts.map(post => {
+            let postBody = post.content;
+            if(postBody.length>300){
+                postBody = postBody.substring(0,300)+"..."
+            }
+            
             return (
                 <div className="post card" key={post.id}>
                     <div className="card-content">
-                        <Link to={"/"+post.id}><span className="card-title red-text">{post.title}</span></Link>
-                        <p>{post.body}</p>
+                        <Link to={"/"+post.id}><span className="card-title blue-text">{post.title}</span></Link>
+                        <p>{renderHTML(postBody)}</p>
                     </div>
                 </div>
             )
@@ -33,6 +39,7 @@ class Home extends Component {
         return (
             <div>
                 <div className="container">
+                <button className="btn right blue" onClick={(event)=>{this.props.history.push("/newPost")}}>New Post</button>
                     <h4 className="center">Home</h4>
                     {postsList}
     
