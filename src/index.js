@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../node_modules/react-confirm-alert/src/react-confirm-alert.css';
 
 ReactDOM.render(
     <App />,

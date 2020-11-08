@@ -6,11 +6,9 @@ import About from './components/About'
 import Contact from './components/Contact'
 import Post from './components/Post'
 import PostForm from './components/PostForm'
-
-
+import EditPost from './components/EditPost'
 
 class App extends Component {
-
 
   render() {
     return (
@@ -22,6 +20,7 @@ class App extends Component {
               <Route path="/about"  component={About}/>
               <Route path="/contact"  component={Contact}/>
               <Route path="/newPost" component={PostForm}/>
+              <Route path="/editPost/:post_id" component={EditPost}/>
               <Route path="/:post_id" component={Post}/>
            </Switch>
 

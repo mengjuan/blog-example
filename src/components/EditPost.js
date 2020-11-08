@@ -7,7 +7,7 @@ import draftToHtml from 'draftjs-to-html'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 
-class PostForm extends Component {
+class EditPost extends Component {
 
     state = {
         editorState: EditorState.createEmpty(),
@@ -18,12 +18,21 @@ class PostForm extends Component {
         super(props);
         let editorState;
         let textTitle;
+        const id = this.props.match.params.post_id;
 
-        if(props.post){
-            textTitle = props.post.title;
-            const contentBlock = htmlToDraft(props.post.body);
-            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-            editorState = EditorState.createWithContent(contentState);
+        if(id){
+            console.log("the post id is "+id);
+            axios.get('http://47.104.167.167/blog-service/api/articles/'+id)
+            .then(res => {
+                this.setState({
+                    textTitle: res.data.title,
+                    editorState: EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(res.data.content)))
+                })
+            })
+            // textTitle = props.post.title;
+            // const contentBlock = htmlToDraft(props.post.body);
+            // const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+            // editorState = EditorState.createWithContent(contentState);
 
         }else{
             editorState = EditorState.createEmpty();
@@ -44,7 +53,7 @@ class PostForm extends Component {
     }
 
     onCancel = ()=>{
-        this.props.history.push('/');
+        this.props.history.push(`/${this.props.match.params.post_id}`);
     }
 
     onSubmit = ()=>{
@@ -54,13 +63,14 @@ class PostForm extends Component {
         const body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         // console.log("the title is ",title," the body is ",body)
         axios.post("http://47.104.167.167/blog-service/api/articles",{
+            id: this.props.match.params.post_id,
             activeflag: 'Y',
             author:'xuhu',
             catagroy: 'java',
             title: title,
             content: body
         }).then(res =>{
-            this.props.history.push('/');
+            this.props.history.push(`/${this.props.match.params.post_id}`);
         }).catch(error=>{
             console.log("error: ",error);
         })
@@ -71,17 +81,8 @@ class PostForm extends Component {
         return (
             <div>
                 <div className="container">
-                    <h4 className="center">New Post</h4>
-                    {/* <div className="input-field">  
-                        <select className='browser-default'>
-                            <option value=""  >Choose your categroy</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
-                        </select>
-                    </div> */}
+                    <h4 className="center">Edit Post</h4>
                     <input value={this.state.textTitle} onChange={this.changeTitle} placeholder="Enter title here"/>
-                    
                     <Editor 
                         editorState={this.state.editorState}
                         wrapperClassName="rdw-dropdown-optionwrapper"
@@ -94,17 +95,6 @@ class PostForm extends Component {
                         <span>        </span>
                         <button className="btn blue" onClick={this.onCancel}>Cancel</button>
                     </div>
-                    {/* <div className = "row">
-                        <form className = "col s12">
-                            <div className = "row">                      
-                                <div className = "input-field col s6">      
-                                    <label htmlFor = "title">Title</label>
-                                    <input id = "title" type = "text"  className = "validate" required />          
-                                </div>
-                            </div>
-                        </form>   
-                    </div> */}
-
 
                 </div>
             </div>
@@ -113,4 +103,4 @@ class PostForm extends Component {
     }
 }
 
-export default withRouter(PostForm)
+export default withRouter(EditPost)
