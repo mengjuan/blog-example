@@ -28,7 +28,7 @@ class Home extends Component {
             return (
                 <div className="post card" key={post.id}>
                     <div className="card-content">
-                        <Link to={"/"+post.id}><span className="card-title blue-text">{post.title}</span></Link>
+            <Link to={"/"+post.id}><span className="card-title blue-text">{post.title}<font size="3">({post.entryDatetime})</font></span></Link>
                         <div>{renderHTML(postBody)}</div>
                     </div>
                 </div>

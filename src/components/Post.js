@@ -58,7 +58,7 @@ class Post extends Component{
             <div className="center">
                 <button className="btn-flat blue" onClick={this.editPost}>Edit</button>
                 <span> </span>
-                <button className="btn-flat grey" onClick={this.deletePost}>Delete</button>
+                {/* <button className="btn-flat grey" onClick={this.deletePost}>Delete</button> */}
             </div>
         </div>
        )

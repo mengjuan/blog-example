@@ -72,20 +72,24 @@ class PostForm extends Component {
             <div>
                 <div className="container">
                     <h4 className="center">New Post</h4>
-                    {/* <div className="input-field">  
-                        <select className='browser-default'>
-                            <option value=""  >Choose your categroy</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                     
+                     {/* <label>
+                        Pick your favorite flavor:
+                        <select className='browser-default' value={this.state.value} onChange={this.handleChange}>
+                            <option value="grapefruit">Grapefruit</option>
+                            <option value="lime">Lime</option>
+                            <option value="coconut">Coconut</option>
+                            <option value="mango">Mango</option>
                         </select>
-                    </div> */}
+                    </label> */}
+                   
+
                     <input value={this.state.textTitle} onChange={this.changeTitle} placeholder="Enter title here"/>
                     
                     <Editor 
                         editorState={this.state.editorState}
-                        wrapperClassName="rdw-dropdown-optionwrapper"
-                        editorClassName="rdw-editor-main"
+                        wrapperClassName=""
+                        editorClassName=""
                         onEditorStateChange={this.onEditorStateChange}
                         />
                     

@@ -85,7 +85,7 @@ class EditPost extends Component {
                     <input value={this.state.textTitle} onChange={this.changeTitle} placeholder="Enter title here"/>
                     <Editor 
                         editorState={this.state.editorState}
-                        wrapperClassName="rdw-dropdown-optionwrapper"
+                        wrapperClassName=""
                         editorClassName="rdw-editor-main"
                         onEditorStateChange={this.onEditorStateChange}
                         />
